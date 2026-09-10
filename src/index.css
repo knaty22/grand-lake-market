@@ -1,0 +1,124 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/*
+  Grand Lake Farmers Market theme.
+  Palette extracted from the market logo:
+    - primary  #FFD800  yellow  (buttons / CTAs — charcoal text on top)
+    - brand teal #008773 (secondary buttons, highlights, focus ring)
+    - background white / very light neutral, charcoal text
+  DoorDash delivery keeps its own brand red (#FF3008) — never themed.
+*/
+
+:root {
+  --background: #ffffff;
+  --foreground: #232726;
+  --card: #ffffff;
+  --card-foreground: #232726;
+  --popover: #ffffff;
+  --popover-foreground: #232726;
+
+  --primary: #ffd800;
+  --primary-foreground: #232726;
+
+  --secondary: #008773;
+  --secondary-foreground: #ffffff;
+
+  --accent: #e3f2ef;
+  --accent-foreground: #00584c;
+
+  --muted: #f3f3f0;
+  --muted-foreground: #6b7270;
+
+  --destructive: #ff3008;
+
+  --border: #e7e6e1;
+  --input: #e7e6e1;
+  --ring: #008773;
+
+  --radius: 0.625rem; /* 10px cards; buttons derive 8px from --radius-md */
+
+  /* app-specific */
+  --app-bg: #fcfcfa;
+  --brand-yellow: #ffd800;
+  --brand-teal: #008773;
+  --price: #1a6b5c; /* darker teal — passes AA for small text */
+  --doordash: #ff3008;
+  --pad: 16px;
+  --phone-width: 390px;
+}
+
+@theme inline {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-brand-yellow: var(--brand-yellow);
+  --color-brand-teal: var(--brand-teal);
+  --color-price: var(--price);
+  --color-doordash: var(--doordash);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  html,
+  body,
+  #root {
+    margin: 0;
+    min-height: 100svh;
+  }
+  body {
+    background: var(--app-bg);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+/* phone shell — kept as a plain utility */
+.phone {
+  width: 100%;
+  max-width: var(--phone-width);
+  margin: 0 auto;
+  min-height: 100svh;
+  background: var(--background);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 1px 2px rgba(31, 36, 31, 0.06);
+}
+
+.phone__scroll {
+  flex: 1;
+  overflow-y: auto;
+}

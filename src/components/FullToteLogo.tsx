@@ -1,23 +1,21 @@
 interface FullToteLogoProps {
-  /** height of the mark in px; wordmark scales with it */
   size?: number
-  /** hide the "FullTote" text, show only the FT mark */
   markOnly?: boolean
 }
 
-/** Simple FullTote wordmark: an "FT" mark tile + the name. */
+/** Placeholder wordmark — replaced by the real Grand Lake logo in the rebrand step. */
 export function FullToteLogo({ size = 40, markOnly = false }: FullToteLogoProps) {
   return (
-    <span className="ftlogo" aria-label="FullTote">
+    <span className="inline-flex items-center gap-2.5" aria-label="FullTote">
       <span
-        className="ftlogo__mark"
         aria-hidden="true"
+        className="inline-flex items-center justify-center bg-secondary font-bold tracking-wide text-secondary-foreground"
         style={{ width: size, height: size, fontSize: size * 0.42, borderRadius: size * 0.28 }}
       >
         FT
       </span>
       {!markOnly && (
-        <span className="ftlogo__word" style={{ fontSize: size * 0.62 }}>
+        <span className="font-bold tracking-tight text-foreground" style={{ fontSize: size * 0.62 }}>
           FullTote
         </span>
       )}

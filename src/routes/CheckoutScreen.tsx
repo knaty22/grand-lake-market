@@ -6,15 +6,14 @@ import { PhoneFrame } from '../components/PhoneFrame'
 import { MarketBanner } from '../components/MarketBanner'
 import { DoorDashBadge } from '../components/DoorDashBadge'
 import { VendorGroupList } from '../components/VendorGroupList'
+import { Button } from '../components/ui/button'
 import { useCart } from '../cart/CartContext'
 import type { ApproachKey } from '../cart/CartContext'
 import { byVendor, totals as cartTotals } from '../cart/selectors'
 import { formatPrice } from '../data/seed'
 import { makeOrderNo, saveOrder } from '../order/orderStore'
 import type { Fulfillment } from '../order/orderStore'
-import './CheckoutScreen.css'
-
-const BACK_TO: Record<ApproachKey, string> = { a: '/a/review', b: '/b/build' }
+import { cn } from '../lib/utils'
 
 export function CheckoutScreen({ approach }: { approach: ApproachKey }) {
   const navigate = useNavigate()
@@ -26,10 +25,13 @@ export function CheckoutScreen({ approach }: { approach: ApproachKey }) {
   if (groups.length === 0) {
     return (
       <PhoneFrame>
-        <AppHeader title="Checkout" backTo={BACK_TO[approach]} />
+        <AppHeader title="Checkout" backTo="/a/review" />
         <div className="phone__scroll">
-          <p className="checkout__empty">
-            Your cart is empty. <Link to={`/${approach}`}>Start over →</Link>
+          <p className="px-4 py-8 text-sm text-muted-foreground">
+            Your cart is empty.{' '}
+            <Link to="/a" className="font-semibold text-brand-teal">
+              Start over →
+            </Link>
           </p>
         </div>
       </PhoneFrame>
@@ -53,14 +55,13 @@ export function CheckoutScreen({ approach }: { approach: ApproachKey }) {
 
   return (
     <PhoneFrame>
-      <AppHeader title="Checkout" backTo={BACK_TO[approach]} />
+      <AppHeader title="Checkout" backTo="/a/review" />
 
       <div className="phone__scroll">
         <MarketBanner />
 
-        <section className="checkout__section">
-          <h2 className="checkout__h">How do you want your order?</h2>
-
+        <section className="px-4 pb-4 pt-1">
+          <h2 className="mb-2.5 text-[15px] font-bold">How do you want your order?</h2>
           <FulfillmentOption
             selected={fulfillment === 'pickup'}
             onSelect={() => setFulfillment('pickup')}
@@ -76,23 +77,25 @@ export function CheckoutScreen({ approach }: { approach: ApproachKey }) {
           />
         </section>
 
-        <section className="checkout__section">
-          <h2 className="checkout__h">Your order</h2>
-          <VendorGroupList groups={groups} />
+        <section className="px-4 pb-4 pt-1">
+          <h2 className="mb-2.5 text-[15px] font-bold">Your order</h2>
+          <div className="overflow-hidden rounded-lg border">
+            <VendorGroupList groups={groups} />
+          </div>
         </section>
       </div>
 
-      <div className="dock">
-        <div className="dock__total">
+      <div className="sticky bottom-0 grid gap-2.5 border-t bg-background p-3">
+        <div className="flex items-baseline justify-between text-[13px] text-muted-foreground">
           <span>
             {totals.itemCount} {totals.itemCount === 1 ? 'item' : 'items'} · {totals.vendorCount}{' '}
             {totals.vendorCount === 1 ? 'vendor' : 'vendors'}
           </span>
-          <strong>{formatPrice(totals.total)}</strong>
+          <strong className="text-lg text-foreground">{formatPrice(totals.total)}</strong>
         </div>
-        <button type="button" className="btn btn--primary btn--block" onClick={placeOrder}>
+        <Button size="block" onClick={placeOrder}>
           Place order
-        </button>
+        </Button>
       </div>
     </PhoneFrame>
   )
@@ -110,17 +113,27 @@ function FulfillmentOption({ selected, onSelect, title, detail, badge }: Fulfill
   return (
     <button
       type="button"
-      className={`fopt${selected ? ' fopt--on' : ''}`}
+      data-testid="fulfillment-option"
       aria-pressed={selected}
       onClick={onSelect}
+      className={cn(
+        'mb-2.5 flex w-full items-start gap-3 rounded-lg border bg-card p-3.5 text-left',
+        selected && 'border-[1.5px] border-brand-teal bg-accent/60',
+      )}
     >
-      <span className={`fopt__radio${selected ? ' fopt__radio--on' : ''}`} aria-hidden="true" />
-      <span className="fopt__body">
-        <span className="fopt__title">
+      <span
+        aria-hidden="true"
+        className={cn(
+          'mt-0.5 size-5 shrink-0 rounded-full border-2',
+          selected ? 'border-brand-teal shadow-[inset_0_0_0_4px_var(--brand-teal)]' : 'border-input',
+        )}
+      />
+      <span className="flex flex-col gap-0.5">
+        <span className="flex items-center gap-2 text-sm font-semibold">
           {title}
           {badge && <DoorDashBadge />}
         </span>
-        <span className="fopt__detail">{detail}</span>
+        <span className="text-xs text-muted-foreground">{detail}</span>
       </span>
     </button>
   )

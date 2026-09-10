@@ -1,15 +1,12 @@
 import type { Product } from '../data/seed'
 
-/**
- * Flat colour block placeholder for a product image (decision D5).
- * Dimensions are controlled by the caller's CSS (e.g. `.a-card .thumb`).
- */
-export function ProductThumb({ product }: { product: Product }) {
+/** Flat colour-block placeholder for a product image. Sized by the caller. */
+export function ProductThumb({ product, className = '' }: { product: Product; className?: string }) {
   return (
     <span
-      className="thumb"
       aria-hidden="true"
-      style={{ background: product.swatch, opacity: 0.85 }}
+      className={className}
+      style={{ background: product.swatch, opacity: 0.9 }}
     />
   )
 }

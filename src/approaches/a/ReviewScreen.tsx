@@ -3,10 +3,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { AppHeader } from '../../components/AppHeader'
 import { PhoneFrame } from '../../components/PhoneFrame'
 import { VendorGroupList } from '../../components/VendorGroupList'
+import { Button } from '../../components/ui/button'
 import { useCart } from '../../cart/CartContext'
 import { byVendor, totals as cartTotals } from '../../cart/selectors'
 import { formatPrice } from '../../data/seed'
-import './a.css'
 
 export function ReviewScreen() {
   const navigate = useNavigate()
@@ -19,8 +19,11 @@ export function ReviewScreen() {
       <PhoneFrame>
         <AppHeader title="Review order" backTo="/a/shop" backLabel="Back to shop" />
         <div className="phone__scroll">
-          <p className="a-empty">
-            Nothing to review. <Link to="/a/shop">Browse the market →</Link>
+          <p className="px-4 py-8 text-sm text-muted-foreground">
+            Nothing to review.{' '}
+            <Link to="/a/shop" className="font-semibold text-brand-teal">
+              Browse the market →
+            </Link>
           </p>
         </div>
       </PhoneFrame>
@@ -35,21 +38,17 @@ export function ReviewScreen() {
         <VendorGroupList groups={groups} showPickup />
       </div>
 
-      <div className="a-dock a-dock--review">
-        <div className="a-dock__total">
+      <div className="sticky bottom-0 grid gap-2.5 border-t bg-background p-3">
+        <div className="flex items-baseline justify-between text-[13px] text-muted-foreground">
           <span>
             {totals.vendorCount} {totals.vendorCount === 1 ? 'vendor' : 'vendors'} · {totals.itemCount}{' '}
             {totals.itemCount === 1 ? 'item' : 'items'}
           </span>
-          <strong>{formatPrice(totals.total)}</strong>
+          <strong className="text-lg text-foreground">{formatPrice(totals.total)}</strong>
         </div>
-        <button
-          type="button"
-          className="btn btn--primary btn--block"
-          onClick={() => navigate('/a/checkout')}
-        >
+        <Button size="block" onClick={() => navigate('/a/checkout')}>
           Checkout
-        </button>
+        </Button>
       </div>
     </PhoneFrame>
   )

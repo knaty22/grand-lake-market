@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
-import './styles/base.css'
+import './index.css'
 import { CartProvider } from './cart/CartContext'
 import { WelcomeScreen } from './routes/WelcomeScreen'
 import { GridScreen } from './approaches/a/GridScreen'

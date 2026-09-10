@@ -4,10 +4,11 @@ import { AppHeader } from '../components/AppHeader'
 import { PhoneFrame } from '../components/PhoneFrame'
 import { DoorDashBadge } from '../components/DoorDashBadge'
 import { VendorGroupList } from '../components/VendorGroupList'
+import { Button } from '../components/ui/button'
 import type { ApproachKey } from '../cart/CartContext'
 import { formatPrice } from '../data/seed'
 import { loadOrder } from '../order/orderStore'
-import './OrderScreen.css'
+import { cn } from '../lib/utils'
 
 const STATUS_STEPS = ['Placed', 'Vendors notified', 'Ready Saturday'] as const
 
@@ -19,8 +20,11 @@ export function OrderScreen({ approach }: { approach: ApproachKey }) {
       <PhoneFrame>
         <AppHeader title="Your order" backTo={`/${approach}`} />
         <div className="phone__scroll">
-          <p className="order__empty">
-            No recent order. <Link to={`/${approach}`}>Start a new order →</Link>
+          <p className="px-4 py-8 text-sm text-muted-foreground">
+            No recent order.{' '}
+            <Link to={`/${approach}`} className="font-semibold text-brand-teal">
+              Start a new order →
+            </Link>
           </p>
         </div>
       </PhoneFrame>
@@ -32,25 +36,28 @@ export function OrderScreen({ approach }: { approach: ApproachKey }) {
     month: 'short',
     day: 'numeric',
   })
-  // In this prototype the order is always freshly placed: it's been placed and
-  // vendors have been notified; "Ready Saturday" is what's still pending.
-  const currentStep = 2
+  const currentStep = 2 // placed + vendors notified done; "Ready Saturday" pending
 
   return (
     <PhoneFrame>
       <AppHeader title="Your order" backTo={`/${approach}`} />
 
       <div className="phone__scroll">
-        <div className="order__head">
-          <div className="order__no">Order {order.orderNo}</div>
-          <div className="order__placed">Placed {placedDate}</div>
+        <div className="px-4 pb-2 pt-4">
+          <div data-testid="order-number" className="text-xl font-bold">
+            Order {order.orderNo}
+          </div>
+          <div className="mt-0.5 text-xs text-muted-foreground">Placed {placedDate}</div>
         </div>
 
-        <section className="order__section">
+        <section className="px-4 pb-3 pt-2">
           <div
-            className={`order__fulfil${order.fulfillment === 'delivery' ? ' order__fulfil--dd' : ''}`}
+            className={cn(
+              'flex flex-col gap-1 rounded-lg border bg-card p-3.5',
+              order.fulfillment === 'delivery' && 'border-doordash',
+            )}
           >
-            <span className="order__fulfil-title">
+            <span className="flex items-center gap-2 text-sm font-semibold">
               {order.fulfillment === 'delivery' ? (
                 <>
                   DoorDash Delivery <DoorDashBadge />
@@ -59,24 +66,49 @@ export function OrderScreen({ approach }: { approach: ApproachKey }) {
                 'Pickup at AIM Booth'
               )}
             </span>
-            <span className="order__fulfil-when">
+            <span className="text-xs text-muted-foreground">
               {order.fulfillment === 'delivery' ? 'Delivered' : 'Collect'} Saturday, 9am–2pm
               {order.fulfillment === 'delivery' ? '' : ', at the AIM Booth'}
             </span>
           </div>
         </section>
 
-        <section className="order__section">
-          <ol className="statusbar">
+        <section className="px-4 pb-3 pt-2">
+          <ol>
             {STATUS_STEPS.map((label, i) => {
-              const state = i < currentStep ? 'done' : i === currentStep ? 'current' : 'todo'
+              const done = i < currentStep
+              const current = i === currentStep
               return (
-                <li key={label} className={`statusbar__step statusbar__step--${state}`}>
-                  <span className="statusbar__dot">{state === 'done' ? '✓' : ''}</span>
-                  <span className="statusbar__label">
+                <li key={label} className="relative flex gap-3 pb-[18px] last:pb-0">
+                  {i < STATUS_STEPS.length - 1 && (
+                    <span
+                      className={cn(
+                        'absolute left-[10px] top-[22px] bottom-0 w-0.5',
+                        done ? 'bg-brand-teal' : 'bg-border',
+                      )}
+                    />
+                  )}
+                  <span
+                    className={cn(
+                      'z-10 flex size-[22px] shrink-0 items-center justify-center rounded-full border-2 text-[11px] font-bold text-white',
+                      done && 'border-brand-teal bg-brand-teal',
+                      current && 'border-brand-teal shadow-[inset_0_0_0_3px_var(--brand-teal)]',
+                      !done && !current && 'border-border bg-background',
+                    )}
+                  >
+                    {done ? '✓' : ''}
+                  </span>
+                  <span
+                    className={cn(
+                      'flex flex-col gap-px pt-px text-sm font-semibold',
+                      !done && !current && 'text-muted-foreground',
+                    )}
+                  >
                     {label}
                     {label === 'Ready Saturday' && (
-                      <span className="statusbar__sub">this Saturday · 9am–2pm</span>
+                      <span className="text-xs font-normal text-muted-foreground">
+                        this Saturday · 9am–2pm
+                      </span>
                     )}
                   </span>
                 </li>
@@ -85,19 +117,21 @@ export function OrderScreen({ approach }: { approach: ApproachKey }) {
           </ol>
         </section>
 
-        <section className="order__section">
-          <h2 className="order__h">
+        <section className="px-4 pb-4 pt-2">
+          <h2 className="mb-2 text-[13px] font-bold text-muted-foreground">
             {order.itemCount} {order.itemCount === 1 ? 'item' : 'items'} from {order.vendorCount}{' '}
             {order.vendorCount === 1 ? 'vendor' : 'vendors'} · {formatPrice(order.total)}
           </h2>
-          <VendorGroupList groups={order.groups} />
+          <div className="overflow-hidden rounded-lg border">
+            <VendorGroupList groups={order.groups} />
+          </div>
         </section>
       </div>
 
-      <div className="dock">
-        <Link to={`/${approach}`} className="btn btn--primary btn--block">
-          Done
-        </Link>
+      <div className="sticky bottom-0 border-t bg-background p-3">
+        <Button asChild size="block">
+          <Link to={`/${approach}`}>Done</Link>
+        </Button>
       </div>
     </PhoneFrame>
   )

@@ -1,6 +1,6 @@
 // Renders the cart grouped by vendor with per-vendor subtotals.
-// This is the shared component behind P1 task 2 ("check cart contents across
-// vendors before payment") in BOTH options.
+// This is the shared component behind the critical job: "check cart contents
+// across vendors before paying."
 
 import { formatPrice } from '../data/seed'
 import type { VendorGroup } from '../cart/selectors'
@@ -13,29 +13,35 @@ interface VendorGroupListProps {
     setQty: (productId: string, qty: number) => void
     remove: (productId: string) => void
   }
-  /** show the vendor's pickup time under its name */
+  /** show the vendor's stall under its name */
   showPickup?: boolean
 }
 
 export function VendorGroupList({ groups, editable, showPickup }: VendorGroupListProps) {
   return (
-    <div>
+    <div data-testid="vendor-groups">
       {groups.map((group) => (
         <section key={group.vendor.id} aria-label={group.vendor.name}>
-          <div className="vgroup__head">
+          <div className="flex items-baseline justify-between gap-2 bg-muted px-4 py-2">
             <div>
-              <div className="vgroup__vendor">{group.vendor.name}</div>
+              <div data-testid="vendor-name" className="text-[13px] font-bold">
+                {group.vendor.name}
+              </div>
               {showPickup && (
-                <div className="kicker" style={{ letterSpacing: 0, textTransform: 'none' }}>
-                  {group.vendor.stall} · pickup by {group.vendor.pickupBy}
-                </div>
+                <div className="text-[11px] text-muted-foreground">{group.vendor.stall}</div>
               )}
             </div>
-            <div className="vgroup__subtotal">subtotal {formatPrice(group.subtotal)}</div>
+            <div className="text-xs font-semibold text-brand-teal">
+              subtotal {formatPrice(group.subtotal)}
+            </div>
           </div>
 
           {group.items.map(({ product, qty, lineTotal }) => (
-            <div className="vline" key={product.id}>
+            <div
+              data-testid="cart-line"
+              className="flex items-center gap-3 border-b px-4 py-2.5"
+              key={product.id}
+            >
               {editable ? (
                 <QtyStepper
                   qty={qty}
@@ -44,16 +50,17 @@ export function VendorGroupList({ groups, editable, showPickup }: VendorGroupLis
                   label={`quantity of ${product.name}`}
                 />
               ) : (
-                <span className="vline__qty" style={{ fontWeight: 600, color: 'var(--muted)' }}>
-                  {qty}×
-                </span>
+                <span className="text-sm font-semibold text-muted-foreground">{qty}×</span>
               )}
-              <span className="vline__name">{product.name}</span>
-              <span className="vline__price">{formatPrice(lineTotal)}</span>
+              <span data-testid="line-name" className="flex-1 text-sm">
+                {product.name}
+              </span>
+              <span className="text-[13px] font-semibold">{formatPrice(lineTotal)}</span>
               {editable && (
                 <button
                   type="button"
-                  className="vline__remove"
+                  data-testid="remove-item"
+                  className="p-1 text-xs text-muted-foreground"
                   onClick={() => editable.remove(product.id)}
                 >
                   Remove
