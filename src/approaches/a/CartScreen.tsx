@@ -37,33 +37,37 @@ export function CartScreen() {
       <AppHeader title="Your cart" backTo="/shop" backLabel="Keep shopping" />
 
       <div className="phone__scroll">
-        <p className="px-4 pb-1 pt-3.5 text-xs text-muted-foreground">
-          {totals.vendorCount} {totals.vendorCount === 1 ? 'vendor' : 'vendors'} ·{' '}
-          {totals.itemCount} {totals.itemCount === 1 ? 'item' : 'items'}
-        </p>
+        <div className="pane">
+          <p className="px-4 pb-1 pt-3.5 text-xs text-muted-foreground">
+            {totals.vendorCount} {totals.vendorCount === 1 ? 'vendor' : 'vendors'} ·{' '}
+            {totals.itemCount} {totals.itemCount === 1 ? 'item' : 'items'}
+          </p>
 
-        {/* Order summary — data table grouped by vendor */}
-        <div className="overflow-hidden border-y">
-          <VendorGroupList groups={groups} editable={{ setQty, remove }} showPickup />
+          {/* Order summary — data table grouped by vendor */}
+          <div className="overflow-hidden border-y">
+            <VendorGroupList groups={groups} editable={{ setQty, remove }} showPickup />
+          </div>
+
+          <p className="px-4 py-3 text-xs text-muted-foreground">
+            Choose pickup or DoorDash delivery and add payment on the next step.
+          </p>
         </div>
-
-        <p className="px-4 py-3 text-xs text-muted-foreground">
-          Choose pickup or DoorDash delivery and add payment on the next step.
-        </p>
       </div>
 
       {/* Order summary total + both CTAs stay on the cart screen */}
-      <div className="grid gap-2.5 border-t bg-background p-3">
-        <div className="flex items-baseline justify-between text-[13px] text-muted-foreground">
-          <span>Total</span>
-          <strong className="text-lg text-foreground">{formatPrice(totals.total)}</strong>
+      <div className="border-t bg-background p-3">
+        <div className="pane grid gap-2.5">
+          <div className="flex items-baseline justify-between text-[13px] text-muted-foreground">
+            <span>Total</span>
+            <strong className="text-lg text-foreground">{formatPrice(totals.total)}</strong>
+          </div>
+          <Button className="h-12 w-full" onClick={() => navigate('/checkout')}>
+            Place order
+          </Button>
+          <Button asChild variant="outline" className="h-11 w-full">
+            <Link to="/shop">Keep shopping</Link>
+          </Button>
         </div>
-        <Button className="h-12 w-full" onClick={() => navigate('/checkout')}>
-          Place order
-        </Button>
-        <Button asChild variant="outline" className="h-11 w-full">
-          <Link to="/shop">Keep shopping</Link>
-        </Button>
       </div>
 
       <BottomNav />

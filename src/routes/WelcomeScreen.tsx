@@ -9,7 +9,7 @@ export function WelcomeScreen() {
 
   return (
     <PhoneFrame>
-      <div className="phone__scroll flex min-h-full flex-col p-4">
+      <div className="phone__scroll pane flex min-h-full flex-col p-4">
         <div className="flex flex-1 flex-col items-center justify-center px-2">
           <GrandLakeLogo height={420} className="max-w-full" />
         </div>

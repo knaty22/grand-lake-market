@@ -12,7 +12,7 @@ interface AppHeaderProps {
 export function AppHeader({ title, backTo, backLabel = 'Back', action }: AppHeaderProps) {
   return (
     <header className="border-b bg-background px-4 pb-3 pt-3.5">
-      <div className="flex items-start justify-between gap-2">
+      <div className="pane flex items-start justify-between gap-2">
         <div className="min-w-0">
           {backTo ? (
             <Link

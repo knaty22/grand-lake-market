@@ -63,7 +63,8 @@ export function GridScreen() {
     <PhoneFrame>
       <AppHeader title="Shop the whole market" backTo="/" backLabel="Back" />
 
-      <div className="grid gap-2.5 border-b bg-background p-4">
+      <div className="border-b bg-background">
+      <div className="pane grid gap-2.5 p-4">
         <InputGroup>
           <InputGroupAddon>
             <SearchIcon />
@@ -115,8 +116,9 @@ export function GridScreen() {
           ))}
         </div>
       </div>
+      </div>
 
-      <div className="phone__scroll">
+      <div className="phone__scroll pane">
         {visible.length === 0 && (
           <p className="px-4 py-8 text-sm text-muted-foreground">
             Nothing matches “{query}”.{' '}
@@ -130,7 +132,7 @@ export function GridScreen() {
             or pick a category above.
           </p>
         )}
-        <div className="grid grid-cols-2 gap-3.5 px-4 pb-28 pt-4">
+        <div className="grid grid-cols-2 gap-3.5 px-4 pb-28 pt-4 md:grid-cols-3">
           {visible.map((product) => {
             const qty = qtys[product.id] ?? 0
             return (
@@ -178,7 +180,9 @@ export function GridScreen() {
 
       {totals.itemCount > 0 && (
         <div className="border-t bg-background p-3">
-          <CartSummaryBar totals={totals} ctaLabel="View cart" onClick={() => navigate('/cart')} />
+          <div className="pane">
+            <CartSummaryBar totals={totals} ctaLabel="View cart" onClick={() => navigate('/cart')} />
+          </div>
         </div>
       )}
 

@@ -19,31 +19,33 @@ export function BottomNav() {
   const count = cartTotals(qtys).itemCount
 
   return (
-    <nav className="sticky bottom-0 z-30 flex shrink-0 items-stretch border-t bg-background">
-      {ITEMS.map(({ to, label, icon: Icon }) => {
-        const active =
-          to === '/' ? pathname === '/' : pathname === to || pathname.startsWith(to + '/')
-        return (
-          <Link
-            key={to}
-            to={to}
-            aria-label={label}
-            aria-current={active ? 'page' : undefined}
-            className={cn(
-              'relative flex flex-1 flex-col items-center gap-0.5 py-2 text-[10px] font-medium',
-              active ? 'text-foreground' : 'text-muted-foreground',
-            )}
-          >
-            <Icon className="size-5" strokeWidth={active ? 2.5 : 2} />
-            {label}
-            {to === '/cart' && count > 0 && (
-              <span className="absolute right-1/2 top-1 -mr-4 flex min-w-4 items-center justify-center rounded-full bg-foreground px-1 text-[9px] font-bold text-background">
-                {count}
-              </span>
-            )}
-          </Link>
-        )
-      })}
+    <nav className="sticky bottom-0 z-30 shrink-0 border-t bg-background">
+      <div className="pane flex items-stretch">
+        {ITEMS.map(({ to, label, icon: Icon }) => {
+          const active =
+            to === '/' ? pathname === '/' : pathname === to || pathname.startsWith(to + '/')
+          return (
+            <Link
+              key={to}
+              to={to}
+              aria-label={label}
+              aria-current={active ? 'page' : undefined}
+              className={cn(
+                'relative flex flex-1 flex-col items-center gap-0.5 py-2 text-[10px] font-medium',
+                active ? 'text-foreground' : 'text-muted-foreground',
+              )}
+            >
+              <Icon className="size-5" strokeWidth={active ? 2.5 : 2} />
+              {label}
+              {to === '/cart' && count > 0 && (
+                <span className="absolute right-1/2 top-1 -mr-4 flex min-w-4 items-center justify-center rounded-full bg-foreground px-1 text-[9px] font-bold text-background">
+                  {count}
+                </span>
+              )}
+            </Link>
+          )
+        })}
+      </div>
     </nav>
   )
 }

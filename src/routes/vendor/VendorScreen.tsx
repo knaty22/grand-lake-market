@@ -43,14 +43,16 @@ export function VendorScreen() {
     <PhoneFrame>
       <AppHeader title="Vendor view" backTo="/account" backLabel="Account" />
 
-      <div className="border-b bg-background px-4 pb-3">
-        <div className="text-sm font-semibold">{VENDOR.stallName}</div>
-        <div className="text-xs text-muted-foreground">
-          {VENDOR.stallNo} · today's market · Sat 9am–2pm
+      <div className="border-b bg-background">
+        <div className="pane px-4 pb-3">
+          <div className="text-sm font-semibold">{VENDOR.stallName}</div>
+          <div className="text-xs text-muted-foreground">
+            {VENDOR.stallNo} · today's market · Sat 9am–2pm
+          </div>
         </div>
       </div>
 
-      <div className="phone__scroll p-4">
+      <div className="phone__scroll pane p-4">
         <Tabs defaultValue="orders">
           <TabsList className="w-full">
             <TabsTrigger value="orders">Orders ({VENDOR.incomingOrders.length})</TabsTrigger>

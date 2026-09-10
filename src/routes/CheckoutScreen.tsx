@@ -89,6 +89,7 @@ export function CheckoutScreen() {
       <AppHeader title="Checkout" backTo="/cart" backLabel="Back to cart" />
 
       <div className="phone__scroll">
+        <div className="pane">
         <MarketBanner />
 
         {/* Delivery options — both shown inline, no separate reveal step */}
@@ -176,25 +177,28 @@ export function CheckoutScreen() {
             <VendorGroupList groups={groups} />
           </div>
         </section>
+        </div>
       </div>
 
-      <div className="grid gap-2.5 border-t bg-background p-3">
-        <div className="flex items-baseline justify-between text-[13px] text-muted-foreground">
-          <span>
-            {totals.itemCount} {totals.itemCount === 1 ? 'item' : 'items'} · {totals.vendorCount}{' '}
-            {totals.vendorCount === 1 ? 'vendor' : 'vendors'}
-          </span>
-          <strong className="text-lg text-foreground">{formatPrice(totals.total)}</strong>
+      <div className="border-t bg-background p-3">
+        <div className="pane grid gap-2.5">
+          <div className="flex items-baseline justify-between text-[13px] text-muted-foreground">
+            <span>
+              {totals.itemCount} {totals.itemCount === 1 ? 'item' : 'items'} · {totals.vendorCount}{' '}
+              {totals.vendorCount === 1 ? 'vendor' : 'vendors'}
+            </span>
+            <strong className="text-lg text-foreground">{formatPrice(totals.total)}</strong>
+          </div>
+          <Button className="h-12 w-full" onClick={placeOrder} disabled={processing}>
+            {processing ? (
+              <>
+                <Spinner /> Processing payment…
+              </>
+            ) : (
+              'Place order'
+            )}
+          </Button>
         </div>
-        <Button className="h-12 w-full" onClick={placeOrder} disabled={processing}>
-          {processing ? (
-            <>
-              <Spinner /> Processing payment…
-            </>
-          ) : (
-            'Place order'
-          )}
-        </Button>
       </div>
     </PhoneFrame>
   )

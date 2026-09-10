@@ -19,7 +19,7 @@ export function AccountScreen() {
     <PhoneFrame>
       <AppHeader title="Account" backTo="/shop" backLabel="Back" />
 
-      <div className="phone__scroll p-4">
+      <div className="phone__scroll pane p-4">
         <Card className="mb-5 flex items-center gap-3 p-4">
           <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-foreground text-base font-bold text-white">
             {CUSTOMER.initials}

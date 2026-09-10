@@ -10,7 +10,7 @@ export function AddressScreen() {
   return (
     <PhoneFrame>
       <AppHeader title="Saved address" backTo="/account" backLabel="Account" />
-      <div className="phone__scroll grid content-start gap-3 p-4">
+      <div className="phone__scroll pane grid content-start gap-3 p-4">
         <Card className="flex items-start gap-3 p-4">
           <MapPin className="mt-0.5 size-5 shrink-0 text-muted-foreground" />
           <div>

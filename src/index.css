@@ -109,11 +109,14 @@
   }
 }
 
-/* app shell — fills the whole viewport.
+/* app shell — responsive across phone, tablet and desktop.
    Pinned to the *dynamic* viewport height (100dvh tracks the mobile browser's
    retracting toolbar) so the header and bottom nav stay put and only
-   .phone__scroll scrolls. Width is 100% of the viewport with no frame gutters;
-   on very wide screens it is centred and capped so lines stay readable. */
+   .phone__scroll scrolls.
+     - phones (< 700px): full-bleed, edge to edge
+     - tablets / iPad (>= 700px): fills the width up to 744px, centred, so the
+       common iPad portrait sizes (768 / 820 / 834) are effectively full-bleed
+     - desktop (>= 1180px): same column with a soft device frame  */
 .phone {
   width: 100%;
   max-width: 100%;
@@ -129,8 +132,28 @@
 
 @media (min-width: 700px) {
   .phone {
-    max-width: var(--phone-width);
-    box-shadow: 0 1px 2px rgba(31, 36, 31, 0.06);
+    max-width: 744px;
+  }
+}
+
+@media (min-width: 1180px) {
+  .phone {
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    box-shadow: 0 8px 48px rgba(31, 36, 31, 0.1);
+  }
+}
+
+/* Every screen's content sits in a centred column of this width once the shell
+   is wider than a phone, so the header, search, product grid, forms and bottom
+   nav all line up on tablet / desktop. */
+.pane {
+  width: 100%;
+  margin-inline: auto;
+}
+@media (min-width: 700px) {
+  .pane {
+    max-width: 680px;
   }
 }
 

@@ -13,7 +13,7 @@ export function RewardsScreen() {
   return (
     <PhoneFrame>
       <AppHeader title="Rewards" backTo="/account" backLabel="Account" />
-      <div className="phone__scroll grid content-start gap-4 p-4">
+      <div className="phone__scroll pane grid content-start gap-4 p-4">
         <Card className="p-4 text-center">
           <div className="text-4xl font-extrabold text-foreground">{points}</div>
           <div className="mt-0.5 text-sm font-medium text-muted-foreground">points · {tier}</div>

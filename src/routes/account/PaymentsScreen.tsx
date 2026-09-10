@@ -11,7 +11,7 @@ export function PaymentsScreen() {
   return (
     <PhoneFrame>
       <AppHeader title="Payment methods" backTo="/account" backLabel="Account" />
-      <div className="phone__scroll grid content-start gap-3 p-4">
+      <div className="phone__scroll pane grid content-start gap-3 p-4">
         {CUSTOMER.payments.map((p) => (
           <Card key={p.id} className="flex items-center gap-3 p-4">
             <CreditCard className="size-5 shrink-0 text-muted-foreground" />

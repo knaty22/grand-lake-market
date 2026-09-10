@@ -17,7 +17,7 @@ export function LoginScreen() {
 
   return (
     <PhoneFrame>
-      <div className="phone__scroll flex min-h-full flex-col gap-4 p-4">
+      <div className="phone__scroll pane flex min-h-full flex-col gap-4 p-4">
         <div className="flex flex-col items-center pb-2 pt-6">
           <GrandLakeLogo height={72} />
           <h1 className="mt-4 text-lg font-bold">Log in to Grand Lake</h1>

@@ -46,6 +46,7 @@ export function OrderScreen() {
       <AppHeader title="Your order" backTo="/" />
 
       <div className="phone__scroll">
+        <div className="pane">
         <div className="px-4 pb-2 pt-4">
           <div data-testid="order-number" className="text-xl font-bold">
             Order {order.orderNo}
@@ -144,12 +145,15 @@ export function OrderScreen() {
             <VendorGroupList groups={order.groups} />
           </div>
         </section>
+        </div>
       </div>
 
       <div className="border-t bg-background p-3">
-        <Button asChild className="h-12 w-full">
-          <Link to="/">Done</Link>
-        </Button>
+        <div className="pane">
+          <Button asChild className="h-12 w-full">
+            <Link to="/">Done</Link>
+          </Button>
+        </div>
       </div>
 
       <BottomNav />
