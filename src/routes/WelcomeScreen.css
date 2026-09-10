@@ -1,0 +1,65 @@
+.welcome {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.welcome__brand {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 18px;
+  padding: 40px 8px;
+}
+
+.welcome__tagline {
+  max-width: 20rem;
+  font-size: 16px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.welcome__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 8px;
+}
+
+.welcome__cta {
+  width: 100%;
+}
+
+.welcome__order-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* FullTote logo */
+.ftlogo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ftlogo__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.ftlogo__word {
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
