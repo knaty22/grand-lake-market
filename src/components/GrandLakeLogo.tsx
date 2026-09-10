@@ -27,7 +27,9 @@ export function GrandLakeLogo({ height = 128, className }: GrandLakeLogoProps) {
     )
   }
 
-  // SVG recreation — a turnip: yellow body, teal leaves, hand-lettered text.
+  // SVG recreation of the real logo — a turnip: irregular yellow body, teal
+  // leaf cluster sprouting top-left, hand-lettered white "GRAND LAKE" tilted
+  // slightly, teal "FARMERS MARKET" beneath.
   return (
     <svg
       viewBox="0 0 200 200"
@@ -36,51 +38,46 @@ export function GrandLakeLogo({ height = 128, className }: GrandLakeLogoProps) {
       role="img"
       aria-label="Grand Lake Farmers Market"
     >
-      {/* leaves */}
-      <g fill="#008773">
-        <path d="M92 60c-6-14-4-30 4-40 6 10 8 26 2 40z" />
-        <path d="M96 62c8-12 22-20 36-20-4 12-16 24-32 26z" />
-        <path d="M88 64c-12-6-22-18-24-32 12 2 26 12 32 28z" />
-        <path d="M100 66c14-2 30 2 40 12-12 6-30 6-42-4z" />
-        <path d="M84 70c-14 2-28 10-34 22 12 4 28 2 38-10z" />
+      {/* leaf cluster, top-left */}
+      <g fill="#0f8074">
+        <path d="M78 74c-16-2-30-12-38-26 15-4 33 0 44 14z" />
+        <path d="M82 68c-10-14-12-32-6-48 12 9 20 27 16 46z" />
+        <path d="M90 66c2-17 13-32 30-40 3 15-2 34-18 44z" />
+        <path d="M92 72c12-11 29-16 46-13-6 14-22 25-42 22z" />
+        <path d="M74 84c-14 3-27 13-33 27 14 3 30-1 40-15z" />
+        <path d="M86 80l6-14 6 14-6 6z" fill="#ffffff" opacity="0.15" />
       </g>
-      {/* body */}
+      {/* turnip body — deliberately lumpy */}
       <path
-        d="M100 66c34 0 58 20 58 54 0 40-30 66-58 66s-58-24-58-62c0-36 24-58 58-58z"
+        d="M100 66c22-1 41 9 50 27 8 16 6 37-4 53-11 17-30 27-47 25-19-2-36-16-42-37-5-19-1-42 13-56 8-8 19-12 30-12z"
         fill="#ffd800"
       />
-      {/* wordmark */}
-      <text
-        x="100"
-        y="120"
-        textAnchor="middle"
-        fontSize="30"
-        fontWeight="800"
+      {/* little root tail, lower-right */}
+      <path d="M147 156c9 3 16 9 20 18-11 1-21-4-26-13z" fill="#ffd800" />
+      {/* wordmark, tilted like the hand lettering */}
+      <g
+        transform="rotate(-7 100 120)"
         fill="#ffffff"
-        fontFamily="Inter, sans-serif"
-      >
-        GRAND
-      </text>
-      <text
-        x="100"
-        y="150"
-        textAnchor="middle"
-        fontSize="30"
+        fontFamily="'Trebuchet MS', 'Segoe UI', Inter, sans-serif"
         fontWeight="800"
-        fill="#ffffff"
-        fontFamily="Inter, sans-serif"
+        textAnchor="middle"
       >
-        LAKE
-      </text>
+        <text x="100" y="120" fontSize="30">
+          GRAND
+        </text>
+        <text x="100" y="150" fontSize="34">
+          LAKE
+        </text>
+      </g>
       <text
         x="100"
-        y="170"
+        y="172"
         textAnchor="middle"
-        fontSize="12"
+        fontSize="11"
         fontWeight="700"
-        letterSpacing="1"
-        fill="#008773"
-        fontFamily="Inter, sans-serif"
+        letterSpacing="1.5"
+        fill="#0f8074"
+        fontFamily="'Trebuchet MS', 'Segoe UI', Inter, sans-serif"
       >
         FARMERS MARKET
       </text>
