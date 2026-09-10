@@ -43,11 +43,18 @@ export function DeliveryMap() {
         disableDefaultUI: true,
         gestureHandling: 'none',
         keyboardShortcuts: false,
+        // monochrome map — matches the black & white design system
+        styles: [
+          { elementType: 'geometry', stylers: [{ saturation: -100 }] },
+          { elementType: 'labels', stylers: [{ saturation: -100 }, { lightness: 10 }] },
+          { featureType: 'poi', stylers: [{ visibility: 'off' }] },
+          { featureType: 'transit', stylers: [{ visibility: 'off' }] },
+        ],
       })
 
       new Polyline({
         path: [BOOTH, DROP],
-        strokeColor: '#008773',
+        strokeColor: '#0a0a0a',
         strokeWeight: 4,
         strokeOpacity: 0.9,
         map,
@@ -62,7 +69,7 @@ export function DeliveryMap() {
         icon: {
           path: google.maps.SymbolPath.CIRCLE,
           scale: 8,
-          fillColor: '#ff3008',
+          fillColor: '#0a0a0a',
           fillOpacity: 1,
           strokeColor: '#ffffff',
           strokeWeight: 2,
@@ -109,7 +116,7 @@ export function DeliveryMap() {
       )}
       {status === 'ready' && (
         <div className="absolute bottom-2 left-2 rounded-md bg-background/90 px-2 py-1 text-[11px] font-semibold shadow-sm">
-          <span className="text-doordash">●</span> Dasher en route
+          <span aria-hidden>●</span> Dasher en route
         </div>
       )}
     </div>

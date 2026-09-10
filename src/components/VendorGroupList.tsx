@@ -4,11 +4,19 @@
 
 import { formatPrice } from '../data/seed'
 import type { VendorGroup } from '../cart/selectors'
-import { QtyStepper } from './QtyStepper'
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from './ui/select'
+
+const QTY_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 interface VendorGroupListProps {
   groups: VendorGroup[]
-  /** when set, each line gets a stepper + remove control */
+  /** when set, each line gets a quantity Select + remove control */
   editable?: {
     setQty: (productId: string, qty: number) => void
     remove: (productId: string) => void
@@ -31,9 +39,7 @@ export function VendorGroupList({ groups, editable, showPickup }: VendorGroupLis
                 <div className="text-[11px] text-muted-foreground">{group.vendor.stall}</div>
               )}
             </div>
-            <div className="text-xs font-semibold text-brand-teal">
-              subtotal {formatPrice(group.subtotal)}
-            </div>
+            <div className="text-xs font-semibold">subtotal {formatPrice(group.subtotal)}</div>
           </div>
 
           {group.items.map(({ product, qty, lineTotal }) => (
@@ -43,12 +49,25 @@ export function VendorGroupList({ groups, editable, showPickup }: VendorGroupLis
               key={product.id}
             >
               {editable ? (
-                <QtyStepper
-                  qty={qty}
-                  onDec={() => editable.setQty(product.id, qty - 1)}
-                  onInc={() => editable.setQty(product.id, qty + 1)}
-                  label={`quantity of ${product.name}`}
-                />
+                <Select
+                  value={String(qty)}
+                  onValueChange={(v) => editable.setQty(product.id, Number(v))}
+                >
+                  <SelectTrigger
+                    size="sm"
+                    className="w-[62px]"
+                    aria-label={`quantity of ${product.name}`}
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {QTY_OPTIONS.map((n) => (
+                      <SelectItem key={n} value={String(n)}>
+                        {n}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               ) : (
                 <span className="text-sm font-semibold text-muted-foreground">{qty}×</span>
               )}
@@ -60,7 +79,7 @@ export function VendorGroupList({ groups, editable, showPickup }: VendorGroupLis
                 <button
                   type="button"
                   data-testid="remove-item"
-                  className="p-1 text-xs text-muted-foreground"
+                  className="p-1 text-xs text-muted-foreground underline"
                   onClick={() => editable.remove(product.id)}
                 >
                   Remove

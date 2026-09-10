@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 
 import { AppHeader } from '../components/AppHeader'
 import { PhoneFrame } from '../components/PhoneFrame'
+import { BottomNav } from '../components/BottomNav'
 import { DoorDashBadge } from '../components/DoorDashBadge'
 import { VendorGroupList } from '../components/VendorGroupList'
 import { DeliveryMap } from '../components/DeliveryMap'
@@ -20,7 +21,7 @@ export function OrderScreen() {
         <div className="phone__scroll">
           <p className="px-4 py-8 text-sm text-muted-foreground">
             No recent order.{' '}
-            <Link to="/shop" className="font-semibold text-brand-teal">
+            <Link to="/shop" className="font-semibold text-foreground">
               Start a new order →
             </Link>
           </p>
@@ -90,15 +91,15 @@ export function OrderScreen() {
                     <span
                       className={cn(
                         'absolute left-1/2 top-[13px] h-0.5 w-full',
-                        done ? 'bg-brand-teal' : 'bg-border',
+                        done ? 'bg-foreground' : 'bg-border',
                       )}
                     />
                   )}
                   <span
                     className={cn(
                       'z-10 flex size-7 items-center justify-center rounded-full border-2 text-xs font-bold',
-                      done && 'border-brand-teal bg-brand-teal text-white',
-                      current && 'border-brand-teal bg-background text-brand-teal',
+                      done && 'border-foreground bg-foreground text-white',
+                      current && 'border-foreground bg-background text-foreground',
                       !done && !current && 'border-border bg-background text-muted-foreground',
                     )}
                   >
@@ -142,11 +143,13 @@ export function OrderScreen() {
         </section>
       </div>
 
-      <div className="sticky bottom-0 border-t bg-background p-3">
-        <Button asChild size="block">
+      <div className="border-t bg-background p-3">
+        <Button asChild className="h-12 w-full">
           <Link to="/">Done</Link>
         </Button>
       </div>
+
+      <BottomNav />
     </PhoneFrame>
   )
 }

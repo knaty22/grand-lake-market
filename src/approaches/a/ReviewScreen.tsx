@@ -21,7 +21,7 @@ export function ReviewScreen() {
         <div className="phone__scroll">
           <p className="px-4 py-8 text-sm text-muted-foreground">
             Nothing to review.{' '}
-            <Link to="/shop" className="font-semibold text-brand-teal">
+            <Link to="/shop" className="font-semibold text-foreground">
               Browse the market →
             </Link>
           </p>

@@ -15,18 +15,18 @@ export function CartSummaryBar({ totals, ctaLabel, onClick, disabled }: CartSumm
     <button
       type="button"
       data-testid="cart-bar"
-      className="flex w-full items-center justify-between gap-3 rounded-lg bg-secondary px-4 py-3 text-secondary-foreground disabled:opacity-45"
+      className="flex w-full items-center justify-between gap-3 rounded-lg bg-primary px-4 py-3 text-primary-foreground disabled:opacity-45"
       onClick={onClick}
       disabled={disabled}
       aria-label={`${ctaLabel}. ${summary}. ${formatPrice(totals.total)}`}
     >
       <span className="flex flex-col items-start">
-        <span data-testid="cart-summary" className="text-xs font-medium opacity-90">
+        <span data-testid="cart-summary" className="text-xs font-medium opacity-80">
           {summary}
         </span>
         <span className="text-base font-bold">{formatPrice(totals.total)}</span>
       </span>
-      <span className="rounded-md bg-white/95 px-4 py-2 text-sm font-semibold text-secondary">
+      <span className="rounded-md bg-background px-4 py-2 text-sm font-semibold text-foreground">
         {ctaLabel}
       </span>
     </button>

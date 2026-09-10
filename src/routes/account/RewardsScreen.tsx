@@ -15,7 +15,7 @@ export function RewardsScreen() {
       <AppHeader title="Rewards" backTo="/account" backLabel="Account" />
       <div className="phone__scroll grid content-start gap-4 p-4">
         <Card className="p-4 text-center">
-          <div className="text-4xl font-extrabold text-brand-teal">{points}</div>
+          <div className="text-4xl font-extrabold text-foreground">{points}</div>
           <div className="mt-0.5 text-sm font-medium text-muted-foreground">points · {tier}</div>
         </Card>
 
@@ -26,7 +26,7 @@ export function RewardsScreen() {
           </div>
           <Progress value={pct} />
           <p className="mt-3 flex items-start gap-2 text-sm">
-            <Gift className="mt-0.5 size-4 shrink-0 text-brand-teal" />
+            <Gift className="mt-0.5 size-4 shrink-0 text-foreground" />
             {perk}
           </p>
         </Card>

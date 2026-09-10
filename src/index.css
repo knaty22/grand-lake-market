@@ -2,48 +2,46 @@
 @import 'tw-animate-css';
 
 /*
-  Grand Lake Farmers Market theme.
-  Palette extracted from the market logo:
-    - primary  #FFD800  yellow  (buttons / CTAs — charcoal text on top)
-    - brand teal #008773 (secondary buttons, highlights, focus ring)
-    - background white / very light neutral, charcoal text
-  DoorDash delivery keeps its own brand red (#FF3008) — never themed.
+  Grand Lake Farmers Market — black & white design system.
+  No colour anywhere in the UI chrome. The ONLY exceptions:
+    - the DoorDash badge / delivery labelling keeps DoorDash brand red (#FF3008)
+    - the Grand Lake logo image on the welcome screen keeps its own colours
 */
 
 :root {
   --background: #ffffff;
-  --foreground: #232726;
+  --foreground: #0a0a0a;
   --card: #ffffff;
-  --card-foreground: #232726;
+  --card-foreground: #0a0a0a;
   --popover: #ffffff;
-  --popover-foreground: #232726;
+  --popover-foreground: #0a0a0a;
 
-  --primary: #ffd800;
-  --primary-foreground: #232726;
+  --primary: #0a0a0a;
+  --primary-foreground: #ffffff;
 
-  --secondary: #008773;
-  --secondary-foreground: #ffffff;
+  --secondary: #f4f4f4;
+  --secondary-foreground: #0a0a0a;
 
-  --accent: #e3f2ef;
-  --accent-foreground: #00584c;
+  --accent: #f4f4f4;
+  --accent-foreground: #0a0a0a;
 
-  --muted: #f3f3f0;
-  --muted-foreground: #6b7270;
+  --muted: #f5f5f5;
+  --muted-foreground: #666666;
 
   --destructive: #ff3008;
 
-  --border: #e7e6e1;
-  --input: #e7e6e1;
-  --ring: #008773;
+  --border: #e5e5e5;
+  --input: #d4d4d4;
+  --ring: #0a0a0a;
 
   --radius: 0.625rem; /* 10px cards; buttons derive 8px from --radius-md */
 
-  /* app-specific */
-  --app-bg: #fcfcfa;
-  --brand-yellow: #ffd800;
-  --brand-teal: #008773;
-  --price: #1a6b5c; /* darker teal — passes AA for small text */
-  --doordash: #ff3008;
+  /* app-specific — all monochrome now; kept as names so screens don't churn */
+  --app-bg: #ffffff;
+  --brand-yellow: #0a0a0a;
+  --brand-teal: #0a0a0a;
+  --price: #0a0a0a;
+  --doordash: #ff3008; /* the one allowed colour */
   --pad: 16px;
   --phone-width: 390px;
 }

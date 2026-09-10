@@ -27,7 +27,7 @@ export function QtyStepper({ qty, onDec, onInc, label = 'quantity' }: QtyStepper
         type="button"
         onClick={onInc}
         aria-label="increase"
-        className="px-2.5 py-1.5 text-base font-semibold leading-none text-brand-teal"
+        className="px-2.5 py-1.5 text-base font-semibold leading-none text-foreground"
       >
         +
       </button>

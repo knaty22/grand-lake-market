@@ -3,6 +3,7 @@ import { ChevronRight, CreditCard, MapPin, Receipt, Gift, Store } from 'lucide-r
 
 import { AppHeader } from '../../components/AppHeader'
 import { PhoneFrame } from '../../components/PhoneFrame'
+import { BottomNav } from '../../components/BottomNav'
 import { Card } from '../../components/ui/card'
 import { Button } from '../../components/ui/button'
 import { CUSTOMER } from '../../data/account'
@@ -20,7 +21,7 @@ export function AccountScreen() {
 
       <div className="phone__scroll p-4">
         <Card className="mb-5 flex items-center gap-3 p-4">
-          <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-brand-teal text-base font-bold text-white">
+          <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-foreground text-base font-bold text-white">
             {CUSTOMER.initials}
           </span>
           <div className="min-w-0">
@@ -78,10 +79,12 @@ export function AccountScreen() {
 
         <div className="mt-6 text-center">
           <Button asChild variant="ghost" size="sm">
-            <Link to="/shop">Back to shopping</Link>
+            <Link to="/login">Switch account</Link>
           </Button>
         </div>
       </div>
+
+      <BottomNav />
     </PhoneFrame>
   )
 }

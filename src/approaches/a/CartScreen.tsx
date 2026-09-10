@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { AppHeader } from '../../components/AppHeader'
 import { PhoneFrame } from '../../components/PhoneFrame'
+import { BottomNav } from '../../components/BottomNav'
 import { VendorGroupList } from '../../components/VendorGroupList'
 import { Button } from '../../components/ui/button'
 import { useCart } from '../../cart/CartContext'
@@ -22,7 +23,7 @@ export function CartScreen() {
         {groups.length === 0 ? (
           <p className="px-4 py-8 text-sm text-muted-foreground">
             Your cart is empty.{' '}
-            <Link to="/shop" className="font-semibold text-brand-teal">
+            <Link to="/shop" className="font-semibold text-foreground underline">
               Browse the market →
             </Link>
           </p>
@@ -38,16 +39,18 @@ export function CartScreen() {
       </div>
 
       {groups.length > 0 && (
-        <div className="sticky bottom-0 grid gap-2.5 border-t bg-background p-3">
+        <div className="grid gap-2.5 border-t bg-background p-3">
           <div className="flex items-baseline justify-between text-[13px] text-muted-foreground">
             <span>Total</span>
             <strong className="text-lg text-foreground">{formatPrice(totals.total)}</strong>
           </div>
-          <Button size="block" onClick={() => navigate('/review')}>
+          <Button className="h-12 w-full" onClick={() => navigate('/review')}>
             Review &amp; check out
           </Button>
         </div>
       )}
+
+      <BottomNav />
     </PhoneFrame>
   )
 }

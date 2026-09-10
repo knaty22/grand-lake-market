@@ -8,11 +8,11 @@ export function MarketBanner() {
     <div
       role="note"
       data-testid="market-banner"
-      className="mx-4 my-4 rounded-lg border border-brand-teal/25 bg-accent/70 p-4"
+      className="mx-4 my-4 rounded-lg border border-foreground/25 bg-accent/70 p-4"
     >
       <div className="text-sm font-bold text-foreground">
         Grand Lake Farmer Market <span className="text-muted-foreground">·</span>{' '}
-        <span className="text-brand-teal">Open Saturdays 9am–2pm</span>
+        <span className="text-foreground">Open Saturdays 9am–2pm</span>
       </div>
       <p className="mt-1 text-xs text-muted-foreground">
         Order any day — every order is fulfilled during Saturday's market window.

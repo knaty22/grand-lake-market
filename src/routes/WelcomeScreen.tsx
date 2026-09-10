@@ -11,18 +11,26 @@ export function WelcomeScreen() {
     <PhoneFrame>
       <div className="phone__scroll flex min-h-full flex-col p-4">
         <div className="flex flex-1 flex-col items-center justify-center px-2">
-          <GrandLakeLogo height={128} />
+          <GrandLakeLogo height={190} />
         </div>
 
         <div className="flex flex-col items-center gap-3">
-          <Button asChild size="block">
+          <Button asChild className="h-12 w-full">
             <Link to="/shop">Get Started</Link>
           </Button>
-          {hasOrder && (
-            <Link to="/order" className="text-[13px] font-semibold text-brand-teal">
-              View your recent order →
+          <div className="flex items-center gap-3 text-[13px] text-muted-foreground">
+            <Link to="/login" className="font-semibold text-foreground">
+              Log in
             </Link>
-          )}
+            {hasOrder && (
+              <>
+                <span aria-hidden>·</span>
+                <Link to="/order" className="font-semibold text-foreground">
+                  Recent order
+                </Link>
+              </>
+            )}
+          </div>
         </div>
 
         <footer className="mt-6 text-center text-[11px] text-muted-foreground">
