@@ -5,24 +5,23 @@ import { PhoneFrame } from '../components/PhoneFrame'
 import { DoorDashBadge } from '../components/DoorDashBadge'
 import { VendorGroupList } from '../components/VendorGroupList'
 import { Button } from '../components/ui/button'
-import type { ApproachKey } from '../cart/CartContext'
 import { formatPrice } from '../data/seed'
 import { loadOrder } from '../order/orderStore'
 import { cn } from '../lib/utils'
 
 const STATUS_STEPS = ['Placed', 'Vendors notified', 'Ready Saturday'] as const
 
-export function OrderScreen({ approach }: { approach: ApproachKey }) {
-  const order = loadOrder(approach)
+export function OrderScreen() {
+  const order = loadOrder()
 
   if (!order) {
     return (
       <PhoneFrame>
-        <AppHeader title="Your order" backTo={`/${approach}`} />
+        <AppHeader title="Your order" backTo="/" />
         <div className="phone__scroll">
           <p className="px-4 py-8 text-sm text-muted-foreground">
             No recent order.{' '}
-            <Link to={`/${approach}`} className="font-semibold text-brand-teal">
+            <Link to="/shop" className="font-semibold text-brand-teal">
               Start a new order →
             </Link>
           </p>
@@ -40,7 +39,7 @@ export function OrderScreen({ approach }: { approach: ApproachKey }) {
 
   return (
     <PhoneFrame>
-      <AppHeader title="Your order" backTo={`/${approach}`} />
+      <AppHeader title="Your order" backTo="/" />
 
       <div className="phone__scroll">
         <div className="px-4 pb-2 pt-4">
@@ -130,7 +129,7 @@ export function OrderScreen({ approach }: { approach: ApproachKey }) {
 
       <div className="sticky bottom-0 border-t bg-background p-3">
         <Button asChild size="block">
-          <Link to={`/${approach}`}>Done</Link>
+          <Link to="/">Done</Link>
         </Button>
       </div>
     </PhoneFrame>

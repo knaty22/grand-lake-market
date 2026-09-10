@@ -10,18 +10,18 @@ import { formatPrice } from '../../data/seed'
 
 export function ReviewScreen() {
   const navigate = useNavigate()
-  const { qtys } = useCart('a')
+  const { qtys } = useCart()
   const groups = byVendor(qtys)
   const totals = cartTotals(qtys)
 
   if (groups.length === 0) {
     return (
       <PhoneFrame>
-        <AppHeader title="Review order" backTo="/a/shop" backLabel="Back to shop" />
+        <AppHeader title="Review order" backTo="/shop" backLabel="Back to shop" />
         <div className="phone__scroll">
           <p className="px-4 py-8 text-sm text-muted-foreground">
             Nothing to review.{' '}
-            <Link to="/a/shop" className="font-semibold text-brand-teal">
+            <Link to="/shop" className="font-semibold text-brand-teal">
               Browse the market →
             </Link>
           </p>
@@ -32,7 +32,7 @@ export function ReviewScreen() {
 
   return (
     <PhoneFrame>
-      <AppHeader title="Review order" backTo="/a/cart" backLabel="Back to cart" />
+      <AppHeader title="Review order" backTo="/cart" backLabel="Back to cart" />
 
       <div className="phone__scroll">
         <VendorGroupList groups={groups} showPickup />
@@ -46,7 +46,7 @@ export function ReviewScreen() {
           </span>
           <strong className="text-lg text-foreground">{formatPrice(totals.total)}</strong>
         </div>
-        <Button size="block" onClick={() => navigate('/a/checkout')}>
+        <Button size="block" onClick={() => navigate('/checkout')}>
           Checkout
         </Button>
       </div>

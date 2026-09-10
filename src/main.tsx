@@ -11,28 +11,15 @@ import { ReviewScreen } from './approaches/a/ReviewScreen'
 import { CheckoutScreen } from './routes/CheckoutScreen'
 import { OrderScreen } from './routes/OrderScreen'
 
-// Final iteration — built forward from Version A (Unified Grid) only.
+// Grand Lake Farmers Market — final customer shopping flow (built from Version A).
 const router = createBrowserRouter([
-  { path: '/', element: <Navigate to="/a" replace /> },
-
-  {
-    path: '/a',
-    element: (
-      <WelcomeScreen
-        approach="a"
-        tagline="Shop the whole Grand Lake Farmers Market in one grid — every vendor, one cart, one pickup."
-        startTo="/a/shop"
-        startLabel="Start shopping"
-      />
-    ),
-  },
-  { path: '/a/shop', element: <GridScreen /> },
-  { path: '/a/cart', element: <CartScreen /> },
-  { path: '/a/review', element: <ReviewScreen /> },
-  { path: '/a/checkout', element: <CheckoutScreen approach="a" /> },
-  { path: '/a/order', element: <OrderScreen approach="a" /> },
-
-  { path: '*', element: <Navigate to="/a" replace /> },
+  { path: '/', element: <WelcomeScreen /> },
+  { path: '/shop', element: <GridScreen /> },
+  { path: '/cart', element: <CartScreen /> },
+  { path: '/review', element: <ReviewScreen /> },
+  { path: '/checkout', element: <CheckoutScreen /> },
+  { path: '/order', element: <OrderScreen /> },
+  { path: '*', element: <Navigate to="/" replace /> },
 ])
 
 createRoot(document.getElementById('root')!).render(

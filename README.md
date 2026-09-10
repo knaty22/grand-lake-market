@@ -1,48 +1,35 @@
-# FullTote — A/B prototype (v2, with checkout + order tracking)
+# Grand Lake Farmers Market
 
-A second, **separate** build of the FullTote Build-order A/B prototype for the
-Grand Lake Farmers Market UX capstone. This is not the same deployment as the
-first prototype — it's its own repo and its own Vercel project.
+The final iteration of the Grand Lake Farmers Market shopping prototype (UX
+capstone). Built forward from Version A ("Unified Grid"), which outperformed
+Version B in live testing.
+
+**Critical job (never regress):** combine items from multiple vendors without
+losing track of what's in the cart.
 
 ## Routes
 
 | Route | Screen |
 | ----- | ------ |
-| `/` | → redirects to `/a` |
-| **`/a`** | Welcome (FullTote logo, tagline, "Start shopping") |
-| `/a/shop` | Option A — Unified Grid |
-| `/a/cart` · `/a/review` | cart (by vendor) · review |
-| `/a/checkout` | Saturday banner + fulfillment choice (Pickup at AIM Booth / DoorDash Delivery) |
-| `/a/order` | Order number, status stepper, items by vendor, fulfillment method |
-| **`/b`** | Welcome (FullTote logo, tagline, "Get started") |
-| `/b/build` | Option B — Guided Builder (3-step wizard) |
-| `/b/checkout` · `/b/order` | same checkout + order screens as A |
+| `/` | Welcome — logo + "Get Started" |
+| `/shop` | Product grid across every vendor (with the Task 2 search fix) |
+| `/cart` | Cart, grouped by vendor |
+| `/review` | Review order |
+| `/checkout` | Saturday-hours banner + fulfillment choice (Pickup / DoorDash Delivery) |
+| `/order` | Order number, status stepper, items by vendor, fulfillment method |
 
-The two options are separate experiences and never link to each other. Carts and
-placed orders are kept separate per option (localStorage).
+Account / vendor-portal / live order-tracking screens are added in later steps.
 
-## What's new vs. the first prototype
+## Assets
 
-- Branded welcome screen before each option's main screen
-- Checkout screen: Saturday 9am–2pm market banner shown before the fulfillment
-  choice; DoorDash Delivery option carries a `#FF3008` DOORDASH badge
-- Order / tracking screen: order number, Placed → Vendors notified → Ready
-  Saturday stepper, re-accessible after checkout for both pickup and delivery
-- Option B step 1 adds a search bar and an "Explore the Farmers Market this
-  week" free-browse button above the category checklist
+Place the market logo at `public/grandlake-logo.png`. Until it's present the
+welcome screen shows a text wordmark fallback.
 
-The core browsing/cart-building experience (grid on `/a/shop`, wizard on
-`/b/build`) is unchanged from the first prototype.
+## Stack
 
-## Run locally
+Vite + React + TypeScript, `react-router-dom`, Tailwind v4, shadcn/ui.
+No backend — the cart and placed order live in `localStorage`; "Place order" is
+a stub. Deploys to Vercel on push to `main`; `vercel.json` rewrites all paths to
+`index.html`.
 
-```bash
-npm install
-npm run dev
-```
-
-## Tech
-
-Vite + React + TypeScript, `react-router-dom`. No backend; "Place order" is a
-stub that records the order locally. Deploys to Vercel on push to `main`;
-`vercel.json` rewrites all paths to `index.html`.
+Prototype by Natalia Quinones.

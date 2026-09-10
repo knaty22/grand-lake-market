@@ -1,4 +1,4 @@
-// Seed data for the FullTote Build-order A/B prototype.
+// Seed data for the Grand Lake Farmers Market prototype.
 // No backend — this is the entire market catalogue for both options.
 
 export type Category =

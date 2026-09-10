@@ -22,7 +22,7 @@ const POPULAR_SEARCHES = ['Honey', 'Soap', 'Candles', 'Sourdough', 'Flowers', 'T
 
 export function GridScreen() {
   const navigate = useNavigate()
-  const { qtys, add, setQty } = useCart('a')
+  const { qtys, add, setQty } = useCart()
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState<Filter>('All')
 
@@ -44,7 +44,7 @@ export function GridScreen() {
 
   return (
     <PhoneFrame>
-      <AppHeader title="Shop the whole market" backTo="/a" backLabel="Back" />
+      <AppHeader title="Shop the whole market" backTo="/" backLabel="Back" />
 
       <div className="grid gap-2.5 border-b bg-background p-4">
         <Input
@@ -153,7 +153,7 @@ export function GridScreen() {
 
       {totals.itemCount > 0 && (
         <div className="sticky bottom-0 border-t bg-background p-3">
-          <CartSummaryBar totals={totals} ctaLabel="View cart" onClick={() => navigate('/a/cart')} />
+          <CartSummaryBar totals={totals} ctaLabel="View cart" onClick={() => navigate('/cart')} />
         </div>
       )}
     </PhoneFrame>

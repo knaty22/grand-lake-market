@@ -8,16 +8,15 @@ import { DoorDashBadge } from '../components/DoorDashBadge'
 import { VendorGroupList } from '../components/VendorGroupList'
 import { Button } from '../components/ui/button'
 import { useCart } from '../cart/CartContext'
-import type { ApproachKey } from '../cart/CartContext'
 import { byVendor, totals as cartTotals } from '../cart/selectors'
 import { formatPrice } from '../data/seed'
 import { makeOrderNo, saveOrder } from '../order/orderStore'
 import type { Fulfillment } from '../order/orderStore'
 import { cn } from '../lib/utils'
 
-export function CheckoutScreen({ approach }: { approach: ApproachKey }) {
+export function CheckoutScreen() {
   const navigate = useNavigate()
-  const { qtys, clear } = useCart(approach)
+  const { qtys, clear } = useCart()
   const groups = byVendor(qtys)
   const totals = cartTotals(qtys)
   const [fulfillment, setFulfillment] = useState<Fulfillment>('pickup')
@@ -25,12 +24,12 @@ export function CheckoutScreen({ approach }: { approach: ApproachKey }) {
   if (groups.length === 0) {
     return (
       <PhoneFrame>
-        <AppHeader title="Checkout" backTo="/a/review" />
+        <AppHeader title="Checkout" backTo="/review" />
         <div className="phone__scroll">
           <p className="px-4 py-8 text-sm text-muted-foreground">
             Your cart is empty.{' '}
-            <Link to="/a" className="font-semibold text-brand-teal">
-              Start over →
+            <Link to="/shop" className="font-semibold text-brand-teal">
+              Browse the market →
             </Link>
           </p>
         </div>
@@ -41,7 +40,6 @@ export function CheckoutScreen({ approach }: { approach: ApproachKey }) {
   function placeOrder() {
     saveOrder({
       orderNo: makeOrderNo(),
-      approach,
       placedAt: new Date().toISOString(),
       fulfillment,
       groups,
@@ -50,12 +48,12 @@ export function CheckoutScreen({ approach }: { approach: ApproachKey }) {
       total: totals.total,
     })
     clear()
-    navigate(`/${approach}/order`)
+    navigate('/order')
   }
 
   return (
     <PhoneFrame>
-      <AppHeader title="Checkout" backTo="/a/review" />
+      <AppHeader title="Checkout" backTo="/review" />
 
       <div className="phone__scroll">
         <MarketBanner />

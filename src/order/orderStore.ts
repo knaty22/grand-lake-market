@@ -1,14 +1,12 @@
 // A placed order, persisted so the order/tracking screen is re-accessible after
-// checkout (for both pickup and delivery). One stored order per approach.
+// checkout (for both pickup and delivery).
 
 import type { VendorGroup } from '../cart/selectors'
-import type { ApproachKey } from '../cart/CartContext'
 
 export type Fulfillment = 'pickup' | 'delivery'
 
 export interface PlacedOrder {
   orderNo: string
-  approach: ApproachKey
   placedAt: string // ISO timestamp
   fulfillment: Fulfillment
   groups: VendorGroup[] // snapshot of the cart at checkout
@@ -17,32 +15,32 @@ export interface PlacedOrder {
   total: number
 }
 
-const key = (approach: ApproachKey) => `fulltote-order-${approach}`
+const KEY = 'grandlake-order-v1'
 
 export function makeOrderNo(): string {
-  return 'FT-' + Math.random().toString(36).slice(2, 8).toUpperCase()
+  return 'GL-' + Math.random().toString(36).slice(2, 8).toUpperCase()
 }
 
 export function saveOrder(order: PlacedOrder): void {
   try {
-    localStorage.setItem(key(order.approach), JSON.stringify(order))
+    localStorage.setItem(KEY, JSON.stringify(order))
   } catch {
     // ignore quota / privacy-mode errors
   }
 }
 
-export function loadOrder(approach: ApproachKey): PlacedOrder | null {
+export function loadOrder(): PlacedOrder | null {
   try {
-    const raw = localStorage.getItem(key(approach))
+    const raw = localStorage.getItem(KEY)
     return raw ? (JSON.parse(raw) as PlacedOrder) : null
   } catch {
     return null
   }
 }
 
-export function clearOrder(approach: ApproachKey): void {
+export function clearOrder(): void {
   try {
-    localStorage.removeItem(key(approach))
+    localStorage.removeItem(KEY)
   } catch {
     // ignore
   }

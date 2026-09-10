@@ -10,19 +10,19 @@ import { formatPrice } from '../../data/seed'
 
 export function CartScreen() {
   const navigate = useNavigate()
-  const { qtys, setQty, remove } = useCart('a')
+  const { qtys, setQty, remove } = useCart()
   const groups = byVendor(qtys)
   const totals = cartTotals(qtys)
 
   return (
     <PhoneFrame>
-      <AppHeader title="Your cart" backTo="/a/shop" backLabel="Keep shopping" />
+      <AppHeader title="Your cart" backTo="/shop" backLabel="Keep shopping" />
 
       <div className="phone__scroll">
         {groups.length === 0 ? (
           <p className="px-4 py-8 text-sm text-muted-foreground">
             Your cart is empty.{' '}
-            <Link to="/a/shop" className="font-semibold text-brand-teal">
+            <Link to="/shop" className="font-semibold text-brand-teal">
               Browse the market →
             </Link>
           </p>
@@ -43,7 +43,7 @@ export function CartScreen() {
             <span>Total</span>
             <strong className="text-lg text-foreground">{formatPrice(totals.total)}</strong>
           </div>
-          <Button size="block" onClick={() => navigate('/a/review')}>
+          <Button size="block" onClick={() => navigate('/review')}>
             Review &amp; check out
           </Button>
         </div>

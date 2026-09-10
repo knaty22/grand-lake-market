@@ -1,57 +1,44 @@
-// Cart state for both options. A and B keep SEPARATE carts (decision D1) so a
-// tester who tries both flows doesn't see one cart bleed into the other.
-// Each approach's cart is persisted to localStorage.
+// Single shopping cart, persisted to localStorage.
 
 import { createContext, useContext, useEffect, useMemo, useReducer } from 'react'
 import type { ReactNode } from 'react'
 import type { Qtys } from './selectors'
 
-export type ApproachKey = 'a' | 'b'
-
-type CartState = Record<ApproachKey, Qtys>
-
 type Action =
-  | { type: 'add'; approach: ApproachKey; productId: string }
-  | { type: 'setQty'; approach: ApproachKey; productId: string; qty: number }
-  | { type: 'remove'; approach: ApproachKey; productId: string }
-  | { type: 'clear'; approach: ApproachKey }
+  | { type: 'add'; productId: string }
+  | { type: 'setQty'; productId: string; qty: number }
+  | { type: 'remove'; productId: string }
+  | { type: 'clear' }
 
-const STORAGE_KEY = 'fulltote-carts-v1'
+const STORAGE_KEY = 'grandlake-cart-v1'
 
-const EMPTY: CartState = { a: {}, b: {} }
-
-function load(): CartState {
-  if (typeof localStorage === 'undefined') return EMPTY
+function load(): Qtys {
+  if (typeof localStorage === 'undefined') return {}
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return EMPTY
-    const parsed = JSON.parse(raw) as Partial<CartState>
-    return { a: parsed.a ?? {}, b: parsed.b ?? {} }
+    return raw ? (JSON.parse(raw) as Qtys) : {}
   } catch {
-    return EMPTY
+    return {}
   }
 }
 
-function reducer(state: CartState, action: Action): CartState {
-  const current = state[action.approach]
+function reducer(state: Qtys, action: Action): Qtys {
   switch (action.type) {
-    case 'add': {
-      const qty = (current[action.productId] ?? 0) + 1
-      return { ...state, [action.approach]: { ...current, [action.productId]: qty } }
-    }
+    case 'add':
+      return { ...state, [action.productId]: (state[action.productId] ?? 0) + 1 }
     case 'setQty': {
-      const next = { ...current }
+      const next = { ...state }
       if (action.qty <= 0) delete next[action.productId]
       else next[action.productId] = action.qty
-      return { ...state, [action.approach]: next }
+      return next
     }
     case 'remove': {
-      const next = { ...current }
+      const next = { ...state }
       delete next[action.productId]
-      return { ...state, [action.approach]: next }
+      return next
     }
     case 'clear':
-      return { ...state, [action.approach]: {} }
+      return {}
     default:
       return state
   }
@@ -65,7 +52,7 @@ interface CartApi {
   clear: () => void
 }
 
-const CartStateContext = createContext<CartState | null>(null)
+const CartStateContext = createContext<Qtys | null>(null)
 const CartDispatchContext = createContext<React.Dispatch<Action> | null>(null)
 
 export function CartProvider({ children }: { children: ReactNode }) {
@@ -86,19 +73,19 @@ export function CartProvider({ children }: { children: ReactNode }) {
   )
 }
 
-export function useCart(approach: ApproachKey): CartApi {
+export function useCart(): CartApi {
   const state = useContext(CartStateContext)
   const dispatch = useContext(CartDispatchContext)
   if (!state || !dispatch) throw new Error('useCart must be used inside <CartProvider>')
 
   return useMemo<CartApi>(
     () => ({
-      qtys: state[approach],
-      add: (productId) => dispatch({ type: 'add', approach, productId }),
-      setQty: (productId, qty) => dispatch({ type: 'setQty', approach, productId, qty }),
-      remove: (productId) => dispatch({ type: 'remove', approach, productId }),
-      clear: () => dispatch({ type: 'clear', approach }),
+      qtys: state,
+      add: (productId) => dispatch({ type: 'add', productId }),
+      setQty: (productId, qty) => dispatch({ type: 'setQty', productId, qty }),
+      remove: (productId) => dispatch({ type: 'remove', productId }),
+      clear: () => dispatch({ type: 'clear' }),
     }),
-    [state, dispatch, approach],
+    [state, dispatch],
   )
 }
