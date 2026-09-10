@@ -73,6 +73,9 @@ export function OrderScreen() {
               {isDelivery ? 'Delivered' : 'Collect'} Saturday, 9am–2pm
               {isDelivery ? '' : ', at the AIM Booth'}
             </span>
+            {isDelivery && order.address && (
+              <span className="mt-0.5 text-xs font-medium text-foreground">{order.address}</span>
+            )}
           </div>
         </section>
 

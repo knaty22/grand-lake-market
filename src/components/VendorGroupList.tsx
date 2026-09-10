@@ -1,6 +1,6 @@
-// Renders the cart grouped by vendor with per-vendor subtotals.
-// This is the shared component behind the critical job: "check cart contents
-// across vendors before paying."
+// Renders the cart grouped by vendor as a data table per vendor, with a
+// per-vendor subtotal. This is the shared component behind the critical job:
+// "check cart contents across vendors before paying."
 
 import { formatPrice } from '../data/seed'
 import type { VendorGroup } from '../cart/selectors'
@@ -11,6 +11,7 @@ import {
   SelectContent,
   SelectItem,
 } from './ui/select'
+import { Table, TableBody, TableCell, TableRow } from './ui/table'
 
 const QTY_OPTIONS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
@@ -27,7 +28,7 @@ interface VendorGroupListProps {
 
 export function VendorGroupList({ groups, editable, showPickup }: VendorGroupListProps) {
   return (
-    <div data-testid="vendor-groups">
+    <div data-testid="vendor-groups" className="divide-y">
       {groups.map((group) => (
         <section key={group.vendor.id} aria-label={group.vendor.name}>
           <div className="flex items-baseline justify-between gap-2 bg-muted px-4 py-2">
@@ -42,51 +43,57 @@ export function VendorGroupList({ groups, editable, showPickup }: VendorGroupLis
             <div className="text-xs font-semibold">subtotal {formatPrice(group.subtotal)}</div>
           </div>
 
-          {group.items.map(({ product, qty, lineTotal }) => (
-            <div
-              data-testid="cart-line"
-              className="flex items-center gap-3 border-b px-4 py-2.5"
-              key={product.id}
-            >
-              {editable ? (
-                <Select
-                  value={String(qty)}
-                  onValueChange={(v) => editable.setQty(product.id, Number(v))}
-                >
-                  <SelectTrigger
-                    size="sm"
-                    className="w-[62px]"
-                    aria-label={`quantity of ${product.name}`}
-                  >
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {QTY_OPTIONS.map((n) => (
-                      <SelectItem key={n} value={String(n)}>
-                        {n}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              ) : (
-                <span className="text-sm font-semibold text-muted-foreground">{qty}×</span>
-              )}
-              <span data-testid="line-name" className="flex-1 text-sm">
-                {product.name}
-              </span>
-              <span className="text-[13px] font-semibold">{formatPrice(lineTotal)}</span>
-              {editable && (
-                <button
-                  type="button"
-                  data-testid="remove-item"
-                  className="p-1 text-xs text-muted-foreground underline"
-                  onClick={() => editable.remove(product.id)}
-                >
-                  Remove
-                </button>
-              )}
-            </div>
-          ))}
+          <Table>
+            <TableBody>
+              {group.items.map(({ product, qty, lineTotal }) => (
+                <TableRow data-testid="cart-line" key={product.id} className="hover:bg-transparent">
+                  <TableCell className="w-[70px] py-2.5 pl-4">
+                    {editable ? (
+                      <Select
+                        value={String(qty)}
+                        onValueChange={(v) => editable.setQty(product.id, Number(v))}
+                      >
+                        <SelectTrigger
+                          size="sm"
+                          className="w-[62px]"
+                          aria-label={`quantity of ${product.name}`}
+                        >
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {QTY_OPTIONS.map((n) => (
+                            <SelectItem key={n} value={String(n)}>
+                              {n}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    ) : (
+                      <span className="text-sm font-semibold text-muted-foreground">{qty}×</span>
+                    )}
+                  </TableCell>
+                  <TableCell data-testid="line-name" className="whitespace-normal py-2.5 text-sm">
+                    {product.name}
+                  </TableCell>
+                  <TableCell className="py-2.5 text-right text-[13px] font-semibold">
+                    {formatPrice(lineTotal)}
+                  </TableCell>
+                  <TableCell className="w-[64px] py-2.5 pr-4 text-right">
+                    {editable && (
+                      <button
+                        type="button"
+                        data-testid="remove-item"
+                        className="text-xs text-muted-foreground underline"
+                        onClick={() => editable.remove(product.id)}
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </section>
       ))}
     </div>

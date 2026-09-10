@@ -9,6 +9,7 @@ export interface PlacedOrder {
   orderNo: string
   placedAt: string // ISO timestamp
   fulfillment: Fulfillment
+  address?: string // delivery address, when fulfillment === 'delivery'
   groups: VendorGroup[] // snapshot of the cart at checkout
   itemCount: number
   vendorCount: number

@@ -19,7 +19,7 @@ export function BottomNav() {
   const count = cartTotals(qtys).itemCount
 
   return (
-    <nav className="flex shrink-0 items-stretch border-t bg-background">
+    <nav className="sticky bottom-0 z-30 flex shrink-0 items-stretch border-t bg-background">
       {ITEMS.map(({ to, label, icon: Icon }) => {
         const active =
           to === '/' ? pathname === '/' : pathname === to || pathname.startsWith(to + '/')

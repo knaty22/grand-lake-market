@@ -10,17 +10,25 @@ import { Badge } from '../../components/ui/badge'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '../../components/ui/tabs'
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '../../components/ui/chart'
 import type { ChartConfig } from '../../components/ui/chart'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../../components/ui/table'
 import { DoorDashBadge } from '../../components/DoorDashBadge'
 import { VENDOR } from '../../data/account'
 import { formatPrice } from '../../data/seed'
 
 const REVENUE = [
-  { week: 'Aug 9', revenue: 420 },
-  { week: 'Aug 16', revenue: 510 },
-  { week: 'Aug 23', revenue: 465 },
-  { week: 'Aug 30', revenue: 620 },
-  { week: 'Sep 6', revenue: 690 },
-  { week: 'Sep 13', revenue: 735 },
+  { week: 'Aug 9', orders: 18, revenue: 420 },
+  { week: 'Aug 16', orders: 21, revenue: 510 },
+  { week: 'Aug 23', orders: 19, revenue: 465 },
+  { week: 'Aug 30', orders: 24, revenue: 620 },
+  { week: 'Sep 6', orders: 27, revenue: 690 },
+  { week: 'Sep 13', orders: 29, revenue: 735 },
 ]
 const chartConfig = {
   revenue: { label: 'Revenue', color: '#0a0a0a' },
@@ -81,6 +89,29 @@ export function VendorScreen() {
                   <Bar dataKey="revenue" fill="var(--color-revenue)" radius={4} />
                 </BarChart>
               </ChartContainer>
+            </Card>
+            <Card className="p-4">
+              <div className="mb-2 text-[13px] font-bold">Sales by market day</div>
+              <Table>
+                <TableHeader>
+                  <TableRow className="hover:bg-transparent">
+                    <TableHead className="px-2">Market day</TableHead>
+                    <TableHead className="px-2 text-right">Orders</TableHead>
+                    <TableHead className="px-2 text-right">Revenue</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {[...REVENUE].reverse().map((r) => (
+                    <TableRow key={r.week} className="hover:bg-transparent">
+                      <TableCell className="px-2 font-medium">Sat {r.week}</TableCell>
+                      <TableCell className="px-2 text-right">{r.orders}</TableCell>
+                      <TableCell className="px-2 text-right font-semibold">
+                        {formatPrice(r.revenue)}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </Card>
             <p className="text-center text-xs text-muted-foreground">
               Prototype — revenue figures are placeholder data.

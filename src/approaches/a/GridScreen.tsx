@@ -20,10 +20,6 @@ import { cn } from '@/lib/utils'
 
 type Filter = 'All' | Category
 
-// Research fix: users didn't know what to search for — concrete example
-// placeholder plus a row of popular searches when the field is empty.
-const POPULAR_SEARCHES = ['Honey', 'Soap', 'Candles', 'Sourdough', 'Flowers', 'Tamales']
-
 export function GridScreen() {
   const navigate = useNavigate()
   const { qtys, add, setQty } = useCart()
@@ -57,38 +53,18 @@ export function GridScreen() {
           </InputGroupAddon>
           <InputGroupInput
             type="search"
-            placeholder='Search — try "honey", "soap", "candles"…'
+            placeholder="Search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             aria-label="Search products"
           />
         </InputGroup>
 
-        {q === '' && (
-          <div className="flex flex-col gap-1.5">
-            <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-              Popular searches
-            </span>
-            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              {POPULAR_SEARCHES.map((s) => (
-                <button
-                  key={s}
-                  type="button"
-                  className={cn(badgeVariants({ variant: 'outline' }), 'shrink-0 cursor-pointer py-1.5')}
-                  onClick={() => setQuery(s.toLowerCase())}
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* category carousel */}
+        {/* category carousel — single scrolling row */}
         <div
           role="tablist"
           aria-label="Category filter"
-          className="-mx-4 flex gap-2 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="-mx-4 flex flex-nowrap gap-2 overflow-x-auto px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {(['All', ...CATEGORIES] as Filter[]).map((c) => (
             <button
@@ -111,7 +87,7 @@ export function GridScreen() {
       <div className="phone__scroll">
         {visible.length === 0 && (
           <p className="px-4 py-8 text-sm text-muted-foreground">
-            Nothing matches “{query}”. Try a popular search above, or a category.
+            Nothing matches “{query}”. Try another word, or pick a category.
           </p>
         )}
         <div className="grid grid-cols-2 gap-3.5 px-4 pb-40 pt-4">
