@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { SearchIcon } from 'lucide-react'
+import { SearchIcon, XIcon } from 'lucide-react'
 
 import { AppHeader } from '../../components/AppHeader'
 import { PhoneFrame } from '../../components/PhoneFrame'
@@ -11,7 +11,12 @@ import { CartSummaryBar } from '../../components/CartSummaryBar'
 import { Button } from '../../components/ui/button'
 import { Card } from '../../components/ui/card'
 import { badgeVariants } from '../../components/ui/badge'
-import { InputGroup, InputGroupInput, InputGroupAddon } from '../../components/ui/input-group'
+import {
+  InputGroup,
+  InputGroupInput,
+  InputGroupAddon,
+  InputGroupButton,
+} from '../../components/ui/input-group'
 import { useCart } from '../../cart/CartContext'
 import { totals as cartTotals } from '../../cart/selectors'
 import { CATEGORIES, PRODUCTS, formatPrice, getVendor } from '../../data/seed'
@@ -27,6 +32,18 @@ export function GridScreen() {
   const [filter, setFilter] = useState<Filter>('All')
 
   const q = query.trim().toLowerCase()
+
+  // A search term and a category filter must never fight each other and leave
+  // the shopper stranded: typing a search clears the active category, and
+  // tapping a category clears the search term. Either control always works.
+  function runSearch(next: string) {
+    setQuery(next)
+    if (next.trim()) setFilter('All')
+  }
+  function pickCategory(c: Filter) {
+    setFilter(c)
+    setQuery('')
+  }
 
   const visible = useMemo(() => {
     return PRODUCTS.filter((p) => {
@@ -55,12 +72,25 @@ export function GridScreen() {
             type="search"
             placeholder="Search"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => runSearch(e.target.value)}
             aria-label="Search products"
           />
+          {query !== '' && (
+            <InputGroupAddon align="inline-end">
+              <InputGroupButton
+                type="button"
+                size="icon-xs"
+                aria-label="Clear search"
+                onClick={() => setQuery('')}
+              >
+                <XIcon />
+              </InputGroupButton>
+            </InputGroupAddon>
+          )}
         </InputGroup>
 
-        {/* category carousel — single scrolling row */}
+        {/* category carousel — single scrolling row, always available even
+            while a search term is showing */}
         <div
           role="tablist"
           aria-label="Category filter"
@@ -71,10 +101,12 @@ export function GridScreen() {
               key={c}
               type="button"
               role="tab"
-              aria-selected={filter === c}
-              onClick={() => setFilter(c)}
+              aria-selected={filter === c && q === ''}
+              onClick={() => pickCategory(c)}
               className={cn(
-                badgeVariants({ variant: filter === c ? 'default' : 'outline' }),
+                badgeVariants({
+                  variant: filter === c && q === '' ? 'default' : 'outline',
+                }),
                 'shrink-0 cursor-pointer py-1.5',
               )}
             >
@@ -87,10 +119,18 @@ export function GridScreen() {
       <div className="phone__scroll">
         {visible.length === 0 && (
           <p className="px-4 py-8 text-sm text-muted-foreground">
-            Nothing matches “{query}”. Try another word, or pick a category.
+            Nothing matches “{query}”.{' '}
+            <button
+              type="button"
+              className="font-semibold text-foreground underline"
+              onClick={() => setQuery('')}
+            >
+              Clear search
+            </button>{' '}
+            or pick a category above.
           </p>
         )}
-        <div className="grid grid-cols-2 gap-3.5 px-4 pb-40 pt-4">
+        <div className="grid grid-cols-2 gap-3.5 px-4 pb-28 pt-4">
           {visible.map((product) => {
             const qty = qtys[product.id] ?? 0
             return (

@@ -87,7 +87,13 @@
   body,
   #root {
     margin: 0;
-    min-height: 100svh;
+    min-height: 100dvh;
+  }
+  html,
+  body {
+    /* guard against any accidental horizontal overflow on mobile */
+    overflow-x: hidden;
+    width: 100%;
   }
   body {
     background: var(--app-bg);
@@ -104,14 +110,15 @@
 }
 
 /* phone shell — kept as a plain utility.
-   Fixed to the viewport height so the header and bottom nav stay pinned and
-   only .phone__scroll scrolls. */
+   Pinned to the *dynamic* viewport height (100dvh tracks the mobile browser's
+   retracting toolbar) so the header and bottom nav stay put and only
+   .phone__scroll scrolls. */
 .phone {
   width: 100%;
   max-width: var(--phone-width);
   margin: 0 auto;
-  height: 100svh;
-  max-height: 100svh;
+  height: 100dvh;
+  max-height: 100dvh;
   overflow: hidden;
   background: var(--background);
   display: flex;
@@ -124,4 +131,5 @@
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
 }

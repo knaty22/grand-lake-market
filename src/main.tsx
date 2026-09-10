@@ -8,6 +8,7 @@ import { WelcomeScreen } from './routes/WelcomeScreen'
 import { LoginScreen } from './routes/LoginScreen'
 import { GridScreen } from './approaches/a/GridScreen'
 import { CartScreen } from './approaches/a/CartScreen'
+import { CheckoutScreen } from './routes/CheckoutScreen'
 import { OrderScreen } from './routes/OrderScreen'
 import { AccountScreen } from './routes/account/AccountScreen'
 import { PaymentsScreen } from './routes/account/PaymentsScreen'
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
   { path: '/login', element: <LoginScreen /> },
   { path: '/shop', element: <GridScreen /> },
   { path: '/cart', element: <CartScreen /> },
+  { path: '/checkout', element: <CheckoutScreen /> },
   { path: '/order', element: <OrderScreen /> },
 
   { path: '/account', element: <AccountScreen /> },
