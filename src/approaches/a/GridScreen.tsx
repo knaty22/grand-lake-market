@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { CircleUser } from 'lucide-react'
 
 import { AppHeader } from '../../components/AppHeader'
 import { PhoneFrame } from '../../components/PhoneFrame'
@@ -44,7 +45,20 @@ export function GridScreen() {
 
   return (
     <PhoneFrame>
-      <AppHeader title="Shop the whole market" backTo="/" backLabel="Back" />
+      <AppHeader
+        title="Shop the whole market"
+        backTo="/"
+        backLabel="Back"
+        action={
+          <Link
+            to="/account"
+            aria-label="Account"
+            className="flex size-10 items-center justify-center rounded-md text-muted-foreground hover:bg-muted"
+          >
+            <CircleUser className="size-6" />
+          </Link>
+        }
+      />
 
       <div className="grid gap-2.5 border-b bg-background p-4">
         <Input
